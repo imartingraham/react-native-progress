@@ -16,14 +16,14 @@ export default class ProgressBar extends Component {
     color: PropTypes.string,
     height: PropTypes.number,
     indeterminate: PropTypes.bool,
+    indeterminateAnimationDuration: PropTypes.number,
     onLayout: PropTypes.func,
     progress: PropTypes.number,
     style: PropTypes.any,
     unfilledColor: PropTypes.string,
     width: PropTypes.number,
     useNativeDriver: PropTypes.bool,
-    // eslint-disable-next-line react/forbid-prop-types
-    animationConfig: PropTypes.object.isRequired,
+    animationConfig: PropTypes.object,
     animationType: PropTypes.oneOf(['decay', 'timing', 'spring']),
   };
 
@@ -34,6 +34,7 @@ export default class ProgressBar extends Component {
     color: 'rgba(0, 122, 255, 1)',
     height: 6,
     indeterminate: false,
+    indeterminateAnimationDuration: 1000,
     progress: 0,
     width: 150,
     useNativeDriver: false,
@@ -91,11 +92,20 @@ export default class ProgressBar extends Component {
     }
   }
 
+  handleLayout = event => {
+    if (!this.props.width) {
+      this.setState({ width: event.nativeEvent.layout.width });
+    }
+    if (this.props.onLayout) {
+      this.props.onLayout(event);
+    }
+  };
+
   animate() {
     this.state.animationValue.setValue(0);
     Animated.timing(this.state.animationValue, {
       toValue: 1,
-      duration: 1000,
+      duration: this.props.indeterminateAnimationDuration,
       easing: Easing.linear,
       isInteraction: false,
       useNativeDriver: this.props.useNativeDriver,
@@ -105,15 +115,6 @@ export default class ProgressBar extends Component {
       }
     });
   }
-
-  handleLayout = event => {
-    if (!this.props.width) {
-      this.setState({ width: event.nativeEvent.layout.width });
-    }
-    if (this.props.onLayout) {
-      this.props.onLayout(event);
-    }
-  };
 
   render() {
     const {

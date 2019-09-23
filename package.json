@@ -1,11 +1,11 @@
 {
   "name": "react-native-progress",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "description": "Progress indicators and spinners for React Native using ReactART",
   "main": "index.js",
   "scripts": {
     "test": "eslint *.js Shapes",
-    "format": "./node_modules/.bin/prettier --write {,Shapes/,Example/}*.js"
+    "format": "./node_modules/.bin/prettier --write {,Shapes/,Example/}*.js README.md *.ts"
   },
   "keywords": [
     "react-native",
@@ -39,19 +39,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-eslint": "^7.0.0",
-    "eslint": "^3.7.1",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "^6.4.1",
-    "prettier": "^1.13.3"
+    "babel-eslint": "^10.0.1",
+    "eslint": "5.3.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.11.0",
+    "prettier": "^1.16.4"
   },
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.7.2"
   },
   "typings": "index.d.ts"
 }

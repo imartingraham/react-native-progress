@@ -8,15 +8,18 @@ export default function withAnimation(WrappedComponent, indeterminateProgress) {
 
   return class AnimatedComponent extends Component {
     static displayName = `withAnimation(${wrappedComponentName})`;
+
     static propTypes = {
       animated: PropTypes.bool,
       direction: PropTypes.oneOf(['clockwise', 'counter-clockwise']),
       indeterminate: PropTypes.bool,
-      progress: PropTypes.number.isRequired,
+      indeterminateAnimationDuration: PropTypes.number,
+      progress: PropTypes.number,
     };
 
     static defaultProps = {
       animated: true,
+      indeterminateAnimationDuration: 1000,
       indeterminate: false,
       progress: 0,
     };
@@ -49,11 +52,6 @@ export default function withAnimation(WrappedComponent, indeterminateProgress) {
       }
     }
 
-    componentWillUnmount() {
-      this.state.progress.removeAllListeners();
-      this.state.rotation.removeAllListeners();
-    }
-
     componentWillReceiveProps(props) {
       if (props.indeterminate !== this.props.indeterminate) {
         if (props.indeterminate) {
@@ -83,11 +81,16 @@ export default function withAnimation(WrappedComponent, indeterminateProgress) {
       }
     }
 
+    componentWillUnmount() {
+      this.state.progress.removeAllListeners();
+      this.state.rotation.removeAllListeners();
+    }
+
     spin() {
       this.state.rotation.setValue(0);
       Animated.timing(this.state.rotation, {
         toValue: this.props.direction === 'counter-clockwise' ? -1 : 1,
-        duration: 1000,
+        duration: this.props.indeterminateAnimationDuration,
         easing: Easing.linear,
         isInteraction: false,
       }).start(endState => {
